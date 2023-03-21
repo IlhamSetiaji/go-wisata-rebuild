@@ -54,6 +54,7 @@
         <!-- Background End -->
 
         <div class="container-fluid p-0 h-100 position-relative">
+            @include('layouts.alert')
             <div class="row g-0 h-100">
                 <!-- Left Side Start -->
                 <div class="offset-0 col-12 d-none d-lg-flex offset-md-1 col-lg h-lg-100">
@@ -81,7 +82,6 @@
                     <div
                         class="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center align-items-center shadow-deep py-5 full-page-content-right-border">
                         <div class="sw-lg-50 px-5">
-                            @include('layouts.alert')
                             <div class="sh-11">
                                 <a href="index.html">
                                     <div class="logo-default"></div>
@@ -92,28 +92,39 @@
                                 <h2 class="cta-1 text-primary">let's get started!</h2>
                             </div>
                             <div class="mb-5">
-                                <p class="h6">Please use your credentials to login.</p>
+                                <p class="h6">Please use the form to register.</p>
                                 <p class="h6">
-                                    If you are not a member, please
-                                    <a href="{{ url('register') }}">register</a>
+                                    If you are a member, please
+                                    <a href="{{ url('login') }}">login</a>
                                     .
                                 </p>
                             </div>
                             <div>
-                                <form action="{{ url('/login') }}" method="POST" enctype="multipart/form-data" class="tooltip-end-bottom" novalidate>
+                                <form action="{{ url('/register') }}" method="POST" enctype="multipart/form-data" class="tooltip-end-bottom" novalidate>
                                     @csrf
+                                    <div class="mb-3 filled form-group tooltip-end-top">
+                                        <i data-acorn-icon="user"></i>
+                                        <input class="form-control" placeholder="Name" name="name" />
+                                    </div>
                                     <div class="mb-3 filled form-group tooltip-end-top">
                                         <i data-acorn-icon="email"></i>
                                         <input class="form-control" placeholder="Email" name="email" />
                                     </div>
                                     <div class="mb-3 filled form-group tooltip-end-top">
+                                        <i data-acorn-icon="phone"></i>
+                                        <input class="form-control" placeholder="Phone" name="phone" />
+                                    </div>
+                                    <div class="mb-3 filled form-group tooltip-end-top">
                                         <i data-acorn-icon="lock-off"></i>
                                         <input class="form-control pe-7" name="password" type="password"
                                             placeholder="Password" />
-                                        <a class="text-small position-absolute t-3 e-3"
-                                            href="#">Forgot?</a>
                                     </div>
-                                    <button type="submit" class="btn btn-lg btn-primary">Login</button>
+                                    <div class="mb-3 filled form-group tooltip-end-top">
+                                        <i data-acorn-icon="lock-off"></i>
+                                        <input class="form-control pe-7" name="password_confirmation" type="password"
+                                            placeholder="Password Confirmation" />
+                                    </div>
+                                    <button type="submit" class="btn btn-lg btn-primary">Register</button>
                                 </form>
                             </div>
                         </div>
