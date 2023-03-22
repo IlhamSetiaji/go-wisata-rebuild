@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->unique()->nullable();
             $table->string('avatar')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('users');
             $table->rememberToken();
             $table->timestamps();
         });

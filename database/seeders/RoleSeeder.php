@@ -19,19 +19,23 @@ class RoleSeeder extends Seeder
                 'guard_name' => 'web',
             ],
             [
-                'name' => 'wisata',
+                'name' => 'admin-city',
                 'guard_name' => 'web',
             ],
             [
-                'name' => 'kuliner',
+                'name' => 'admin-tour',
                 'guard_name' => 'web',
             ],
             [
-                'name' => 'penginapan',
+                'name' => 'admin-culinary',
                 'guard_name' => 'web',
             ],
             [
-                'name' => 'pelanggan',
+                'name' => 'admin-hotel',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'customer',
                 'guard_name' => 'web',
             ],
         ])->each(function ($role) {
@@ -42,6 +46,25 @@ class RoleSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
             ];
+            switch ($role->name) {
+                case 'admin':
+                    $user['parent_id'] = null;
+                    break;
+                case 'admin-city':
+                    $user['parent_id'] = 1;
+                    break;
+                case 'admin-tour':
+                    $user['parent_id'] = 2;
+                    break;
+                case 'admin-culinary':
+                    $user['parent_id'] = 3;
+                    break;
+                case 'admin-hotel':
+                    $user['parent_id'] = 4;
+                    break;
+                default:
+                    break;
+            }
             $user = \App\Models\User::create($user);
             $user->assignRole($role);
         });
