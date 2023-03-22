@@ -18,4 +18,6 @@ interface UserService extends BaseService{
     public function hideEmail(string $email);
     public function viewOtp(int $userId);
     public function register(array $payload);
+    public function sendResetPassword(array $payload);
+    public function resetPassword(array $payload);
 }

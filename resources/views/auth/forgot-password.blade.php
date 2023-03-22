@@ -92,28 +92,22 @@
                                 <h2 class="cta-1 text-primary">let's get started!</h2>
                             </div>
                             <div class="mb-5">
-                                <p class="h6">Please use your credentials to login.</p>
+                                <p class="h6">Please enter your email to receive a link to reset your password.</p>
                                 <p class="h6">
-                                    If you are not a member, please
-                                    <a href="{{ url('register') }}">register</a>
+                                    If you are a member, please
+                                    <a href="{{ url('/login') }}">login</a>
                                     .
                                 </p>
                             </div>
                             <div>
-                                <form action="{{ url('/login') }}" method="POST" enctype="multipart/form-data" class="tooltip-end-bottom" novalidate>
+                                <form class="tooltip-end-bottom" action="{{ url('/forgot-password') }}"
+                                    enctype="multipart/form-data" method="POST" novalidate>
                                     @csrf
                                     <div class="mb-3 filled form-group tooltip-end-top">
                                         <i data-acorn-icon="email"></i>
                                         <input class="form-control" placeholder="Email" name="email" />
                                     </div>
-                                    <div class="mb-3 filled form-group tooltip-end-top">
-                                        <i data-acorn-icon="lock-off"></i>
-                                        <input class="form-control pe-7" name="password" type="password"
-                                            placeholder="Password" />
-                                        <a class="text-small position-absolute t-3 e-3"
-                                            href="{{ url('forgot-password') }}">Forgot?</a>
-                                    </div>
-                                    <button type="submit" class="btn btn-lg btn-primary">Login</button>
+                                    <button type="submit" class="btn btn-lg btn-primary">Send Reset Link</button>
                                 </form>
                             </div>
                         </div>

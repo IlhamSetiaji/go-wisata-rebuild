@@ -39,6 +39,7 @@ class RoleSeeder extends Seeder
             $user = [
                 'name' => $role->name,
                 'email' => $role->name . '@test.test',
+                'email_verified_at' => now(),
                 'password' => Hash::make('password'),
             ];
             $user = \App\Models\User::create($user);

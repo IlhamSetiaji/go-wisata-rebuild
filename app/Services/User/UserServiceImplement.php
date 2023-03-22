@@ -5,11 +5,14 @@ namespace App\Services\User;
 use Exception;
 use Carbon\Carbon;
 use App\Mail\SendMessage;
+use Illuminate\Support\Str;
 use LaravelEasyRepository\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use App\Repositories\User\UserRepository;
+use Illuminate\Auth\Events\PasswordReset;
 use App\Helpers\OneTimePassword\OneTimePassword;
 
 class UserServiceImplement extends Service implements UserService
@@ -201,6 +204,52 @@ class UserServiceImplement extends Service implements UserService
             $this->errorType = 'error';
             $this->errorMessages = $err->getMessage();
             return false;
+        }
+    }
+
+    public function sendResetPassword(array $payload)
+    {
+        try {
+            $user = $this->mainRepository->findBy('email',$payload['email']);
+            if (!$user) {
+                return redirect()->back()->with('error', 'User not found');
+            }
+            $status = Password::sendResetLink(
+                request()->only('email')
+            );
+
+            return $status === Password::RESET_LINK_SENT
+                ? back()->with(['status' => __($status)])
+                : back()->withErrors(['email' => __($status)]);
+        } catch (Exception $err) {
+            return redirect()->back()->with('error', $err->getMessage());
+        }
+    }
+
+    public function resetPassword($payload)
+    {
+        try {
+            $user = $this->mainRepository->findBy('email', $payload['email']);
+            if (!$user) {
+                return redirect()->back()->with('error', 'User not found');
+            }
+            $status = Password::reset(
+                request()->only('email', 'password', 'password_confirmation', 'token'),
+                function ($user, $password) {
+                    $user->forceFill([
+                        'password' => Hash::make($password)
+                    ])->setRememberToken(Str::random(60));
+
+                    $user->save();
+
+                    event(new PasswordReset($user));
+                }
+            );
+            return $status === Password::PASSWORD_RESET
+                ? redirect()->route('login')->with('status', __($status))
+                : back()->withErrors(['email' => [__($status)]]);
+        } catch (Exception $err) {
+            return redirect()->back()->with('error', $err->getMessage());
         }
     }
 }

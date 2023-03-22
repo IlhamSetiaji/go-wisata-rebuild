@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\LoginRequest;
-use App\Http\Requests\User\OtpVerificationRequest;
-use App\Http\Requests\User\RegisterRequest;
 use Illuminate\Http\Request;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
+use App\Http\Requests\User\LoginRequest;
+use App\Http\Requests\User\RegisterRequest;
+use App\Http\Requests\User\ResetPasswordRequest;
+use App\Http\Requests\User\ForgotPasswordRequest;
+use App\Http\Requests\User\OtpVerificationRequest;
 
 class UserController extends Controller
 {
@@ -77,5 +79,22 @@ class UserController extends Controller
             return redirect()->back()->with($this->userService->getErrorType(), $this->userService->getErrorMessages());
         }
         return redirect('/otp/'.$user->id)->with('success', 'Register successfully, please check your email for verification');
+    }
+
+    public function sendResetPassword(ForgotPasswordRequest $request)
+    {
+        $payload = $request->validated();
+        return $this->userService->sendResetPassword($payload);
+    }
+
+    public function resetPasswordView($token)
+    {
+        return view('auth.reset-password', compact('token'));
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $payload = $request->validated();
+        return $this->userService->resetPassword($payload);
     }
 }

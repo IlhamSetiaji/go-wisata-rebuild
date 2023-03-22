@@ -21,9 +21,15 @@ Route::post('register', [UserController::class, 'storeRegister'])->name('registe
 Route::get('/otp/{id}', [UserController::class, 'showVerifyOtp'])->name('otp');
 Route::get('/otp/{id}/resend', [UserController::class, 'resendOtp'])->name('otp.resend');
 Route::post('/otp/{id}', [UserController::class, 'verifyOtp'])->name('otp.verify');
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [UserController::class, 'sendResetPassword'])->middleware('guest')->name('password.email');
+Route::get('/reset-password/{token}', [UserController::class, 'resetPasswordView'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [UserController::class, 'resetPassword'])->middleware('guest')->name('password.update');
 Route::get('/', function () {
     return view('welcome');
-})->middleware('account.verified');
+})->middleware('account.verified')->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
