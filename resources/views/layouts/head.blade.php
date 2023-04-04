@@ -52,6 +52,7 @@
     <!-- Template Base Styles End -->
 
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="{{ asset('js/base/loader.js') }}"></script>
     <script src="https://kit.fontawesome.com/0f57cd0e01.js" crossorigin="anonymous"></script>
 </head>

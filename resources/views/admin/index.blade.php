@@ -47,10 +47,11 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     @foreach ($roles as $role)
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="{{ \Illuminate\Support\Str::slug($role->name) }}-tab" data-bs-toggle="tab"
-                                data-bs-target="#{{ \Illuminate\Support\Str::slug($role->name) }}" type="button" role="tab"
+                            <button class="nav-link" id="{{ \Illuminate\Support\Str::slug($role->name) }}-tab"
+                                data-bs-toggle="tab" data-bs-target="#{{ \Illuminate\Support\Str::slug($role->name) }}"
+                                type="button" role="tab"
                                 aria-controls="{{ \Illuminate\Support\Str::slug($role->name) }}"
-                                aria-selected="true">{{ ucwords(str_replace('-', ' ', $role->name)); }}</button>
+                                aria-selected="true">{{ ucwords(str_replace('-', ' ', $role->name)) }}</button>
                         </li>
                     @endforeach
                 </ul>
@@ -58,9 +59,9 @@
                     @foreach ($roles as $role)
                         <div class="tab-pane fade" id="{{ \Illuminate\Support\Str::slug($role->name) }}" role="tabpanel"
                             aria-labelledby="{{ \Illuminate\Support\Str::slug($role->name) }}-tab">
-                            <a href="{{ url('admin/export/' . $role->id . '/presences') }}"
-                                class="btn btn-info">Export</a>
-                            <table class="table table-hover">
+                            {{-- <a href="{{ url('admin/export/' . $role->id . '/presences') }}"
+                                class="btn btn-info">Export</a> --}}
+                            <table class="table table-hover" id="myTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -90,3 +91,10 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+@endpush
