@@ -33,4 +33,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
+
+    Route::middleware(['admin'])->group(function () {
+        Route::prefix('admin')->group(function(){
+            Route::get('/', [UserController::class, 'listAdmins'])->name('admin');
+        });
+    });
 });

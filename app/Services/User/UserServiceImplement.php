@@ -252,4 +252,9 @@ class UserServiceImplement extends Service implements UserService
             return redirect()->back()->with('error', $err->getMessage());
         }
     }
+
+    public function listAdmins(): ?object
+    {
+        return $this->mainRepository->whereHasNotRole('admin');
+    }
 }

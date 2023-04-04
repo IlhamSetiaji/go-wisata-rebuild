@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
         ])->each(function ($role) {
             $role = \Spatie\Permission\Models\Role::create($role);
             $user = [
-                'name' => $role->name,
+                'name' => ucwords(str_replace('-', ' ', $role->name)),
                 'email' => $role->name . '@test.test',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),

@@ -20,4 +20,5 @@ interface UserService extends BaseService{
     public function register(array $payload);
     public function sendResetPassword(array $payload);
     public function resetPassword(array $payload);
+    public function listAdmins(): ?object;
 }
