@@ -27,85 +27,85 @@
         <!-- User Menu Start -->
         <div class="user-container d-flex">
             @auth
-            <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                @if(auth()->user()->avatar == null)
-                <img class="profile" alt="profile" src="img/profile/profile-11.webp" />
-                <div class="name">{{ auth()->user()->name }}</div>
-                @else
-                <img class="profile" alt="profile" src="{{ auth()->user()->avatar }}" />
-                <div class="name">{{ auth()->user()->name }}</div>
-                @endif
-            </a>
-            <div class="dropdown-menu dropdown-menu-end user-menu wide">
-                <div class="row mb-1 ms-0 me-0">
-                    <div class="col-12 p-1 mb-3 pt-3">
-                        <div class="separator-light"></div>
-                    </div>
-                    <div class="col-6 ps-1 pe-1">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#">
-                                    <i data-acorn-icon="help" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Help</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i data-acorn-icon="file-text" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Docs</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-6 pe-1 ps-1">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="#">
-                                    <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('logout') }}">
-                                    <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Logout</span>
-                                </a>
-                            </li>
-                        </ul>
+                <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    @if (auth()->user()->avatar == null)
+                        <img class="profile" alt="profile" src="img/profile/profile-11.webp" />
+                        <div class="name">{{ auth()->user()->name }}</div>
+                    @else
+                        <img class="profile" alt="profile" src="{{ auth()->user()->avatar }}" />
+                        <div class="name">{{ auth()->user()->name }}</div>
+                    @endif
+                </a>
+                <div class="dropdown-menu dropdown-menu-end user-menu wide">
+                    <div class="row mb-1 ms-0 me-0">
+                        <div class="col-12 p-1 mb-3 pt-3">
+                            <div class="separator-light"></div>
+                        </div>
+                        <div class="col-6 ps-1 pe-1">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="#">
+                                        <i data-acorn-icon="help" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Help</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i data-acorn-icon="file-text" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Docs</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6 pe-1 ps-1">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="#">
+                                        <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('logout') }}">
+                                        <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endauth
             @guest
-            <a href="{{ route('login') }}" class="d-flex user position-relative" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img class="profile" alt="profile" src="img/profile/profile-11.webp" />
-                <div class="name">Unknown User</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end user-menu wide">
-                <div class="row mb-1 ms-0 me-0">
-                    <div class="col-12 p-1 mb-3 pt-3">
-                        <div class="separator-light"></div>
-                    </div>
-                    <div class="col-6 pe-1 ps-1">
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="{{ url('register') }}">
-                                    <i data-acorn-icon="user" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Register</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('login') }}">
-                                    <i data-acorn-icon="login" class="me-2" data-acorn-size="17"></i>
-                                    <span class="align-middle">Login</span>
-                                </a>
-                            </li>
-                        </ul>
+                <a href="{{ route('login') }}" class="d-flex user position-relative" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img class="profile" alt="profile" src="img/profile/profile-11.webp" />
+                    <div class="name">Unknown User</div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end user-menu wide">
+                    <div class="row mb-1 ms-0 me-0">
+                        <div class="col-12 p-1 mb-3 pt-3">
+                            <div class="separator-light"></div>
+                        </div>
+                        <div class="col-6 pe-1 ps-1">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="{{ url('register') }}">
+                                        <i data-acorn-icon="user" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Register</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('login') }}">
+                                        <i data-acorn-icon="login" class="me-2" data-acorn-size="17"></i>
+                                        <span class="align-middle">Login</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endguest
         </div>
         <!-- User Menu End -->
@@ -200,6 +200,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="#dashboards" data-href="#">
+                        <i class="icon fa-solid fa-user-tie"></i>
+                        <span class="label">Administrator</span>
+                    </a>
                 </li>
             </ul>
         </div>

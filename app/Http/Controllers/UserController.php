@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Role\RoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\User\LoginRequest;
@@ -14,10 +15,12 @@ use App\Http\Requests\User\OtpVerificationRequest;
 class UserController extends Controller
 {
     private $userService;
+    private $roleService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, RoleService $roleService)
     {
         $this->userService = $userService;
+        $this->roleService = $roleService;
     }
 
     public function login(): View
@@ -96,5 +99,15 @@ class UserController extends Controller
     {
         $payload = $request->validated();
         return $this->userService->resetPassword($payload);
+    }
+
+    public function listAdmins()
+    {
+        try{
+            $roles = $this->roleService->getRolesWithUsers();
+            return view('admin.index', compact('roles'));
+        } catch (\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

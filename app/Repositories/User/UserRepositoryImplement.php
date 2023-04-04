@@ -25,4 +25,18 @@ class UserRepositoryImplement extends Eloquent implements UserRepository{
     {
         return $this->model->where($field, $value)->first();
     }
+
+    public function whereHasRole(string $role): ?object
+    {
+        return $this->model->with('roles')->whereHas('roles', function ($query) use ($role) {
+            $query->where('name', $role);
+        })->get();
+    }
+
+    public function whereHasNotRole(string $role): ?object
+    {
+        return $this->model->with('roles')->whereDoesntHave('roles', function ($query) use ($role) {
+            $query->where('name', $role);
+        })->get();
+    }
 }
