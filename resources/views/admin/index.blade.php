@@ -7,7 +7,7 @@
             <div class="row">
                 <!-- Title Start -->
                 <div class="col-12 col-sm-6">
-                    <h1 class="mb-0 pb-0 display-4" id="title">Data Users</h1>
+                    <h1 class="mb-0 pb-0 display-4" id="title">Data Administrator</h1>
                     <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
                         <ul class="breadcrumb pt-0">
                             <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
@@ -25,7 +25,7 @@
                         <span>Import</span>
                     </button>
                     <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
-                        data-bs-toggle="modal" data-bs-target="#createUsers">
+                        data-bs-toggle="modal" data-bs-target="#createAdmin">
                         <i data-acorn-icon="chevron-right"></i>
                         <span>Create</span>
                     </button>
@@ -43,7 +43,7 @@
         <div class="row">
             <!-- Continue Learning Start -->
             <div class="col-xl-12 mb-5">
-                <h2 class="small-title">Data Users</h2>
+                <h2 class="small-title">Data Administrator</h2>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     @foreach ($roles as $role)
                         <li class="nav-item" role="presentation">
@@ -59,14 +59,15 @@
                     @foreach ($roles as $role)
                         <div class="tab-pane fade" id="{{ \Illuminate\Support\Str::slug($role->name) }}" role="tabpanel"
                             aria-labelledby="{{ \Illuminate\Support\Str::slug($role->name) }}-tab">
-                            {{-- <a href="{{ url('admin/export/' . $role->id . '/presences') }}"
-                                class="btn btn-info">Export</a> --}}
-                            <table class="table table-hover" id="myTable">
+                            {{-- <button type="button"
+                                class="btn btn-outline-success my-3" data-bs-toggle="modal" data-bs-target="#create{{ ucwords(str_replace('-', '', $role->name)) }}">Create</button> --}}
+                            <table class="table table-hover" id="myTable{{ $role->id }}">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Parent</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -76,6 +77,11 @@
                                             <th scope="row">{{ $loop->index + 1 }}</th>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
+                                            @if ($user->parent)
+                                                <td>{{ $user->parent->name }}</td>
+                                            @else
+                                                <td>-</td>
+                                            @endif
                                             <td><a onclick="return confirm('Are you sure?')"
                                                     href="{{ url('admin/users/' . $user->id . '/delete') }}"
                                                     class="btn btn-danger">Delete</a></td>
@@ -84,6 +90,13 @@
                                 </tbody>
                             </table>
                         </div>
+                        @push('scripts')
+                            <script>
+                                $(document).ready(function() {
+                                    $('#myTable' + "<?php echo $role->id; ?>").DataTable();
+                                });
+                            </script>
+                        @endpush
                     @endforeach
                 </div>
             </div>
@@ -91,10 +104,35 @@
         </div>
     </div>
 @endsection
+@push('modals')
+@include('admin.modals.create')
+@endpush
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
+            $('#role').on('change', function() {
+                var idRole = this.value;
+                $("#parent").html('');
+                $.ajax({
+                    url: "{{ env('APP_URL') . '/api/roles/' }}",
+                    type: "POST",
+                    data: {
+                        role_id: idRole,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result);
+                        $('#parent').html(
+                            '<option value="">-- Select Parent --</option>');
+                        $.each(result, function(key, value) {
+                            $("#parent").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                            console.log(value);
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endpush

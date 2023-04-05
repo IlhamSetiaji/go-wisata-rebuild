@@ -4,7 +4,8 @@ namespace App\Services\User;
 
 use LaravelEasyRepository\BaseService;
 
-interface UserService extends BaseService{
+interface UserService extends BaseService
+{
 
     public function getErrorMessages(): string;
     public function getErrorType(): string;
@@ -21,4 +22,8 @@ interface UserService extends BaseService{
     public function sendResetPassword(array $payload);
     public function resetPassword(array $payload);
     public function listAdmins(): ?object;
+    public function getRolesExceptCurrent(string $role): ?object;
+    public function getRolesExceptCurrentIn(string $field, array $roles): ?object;
+    public function whereHasRoleIn(string $field, array $roles): ?object;
+    public function storeAdmin(array $payload): ?object;
 }

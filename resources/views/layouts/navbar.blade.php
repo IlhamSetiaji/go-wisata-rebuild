@@ -179,34 +179,21 @@
         <div class="menu-container flex-grow-1">
             <ul id="menu" class="menu">
                 <li>
-                    <a href="#dashboards" data-href="Dashboards.html">
+                    <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">
                         <i data-acorn-icon="home" class="icon" data-acorn-size="18"></i>
                         <span class="label">Dashboards</span>
                     </a>
-                    <ul id="dashboards">
-                        <li>
-                            <a href="Dashboards.Default.html">
-                                <span class="label">Default</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="Dashboards.Visual.html">
-                                <span class="label">Visual</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="Dashboards.Analytic.html">
-                                <span class="label">Analytic</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <li>
-                    <a href="#dashboards" data-href="#">
-                        <i class="icon fa-solid fa-user-tie"></i>
-                        <span class="label">Administrator</span>
-                    </a>
-                </li>
+                @auth
+                    @if (auth()->user()->hasRole('admin'))
+                        <li>
+                            <a href="{{ url('admin') }}" class="{{ request()->is('admin*') ? 'active' : '' }}">
+                                <i class="icon fa-solid fa-user-tie"></i>
+                                <span class="label">Administrator</span>
+                            </a>
+                        </li>
+                    @endif
+                @endauth
             </ul>
         </div>
         <!-- Menu End -->

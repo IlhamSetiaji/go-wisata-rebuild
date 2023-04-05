@@ -257,4 +257,26 @@ class UserServiceImplement extends Service implements UserService
     {
         return $this->mainRepository->whereHasNotRole('admin');
     }
+
+    public function getRolesExceptCurrent(string $role): ?object
+    {
+        return $this->mainRepository->whereHasNotRole($role);
+    }
+
+    public function getRolesExceptCurrentIn(string $field, array $roles): ?object
+    {
+        return $this->mainRepository->whereHasNotRoleIn($field, $roles);
+    }
+
+    public function whereHasRoleIn(string $field, array $roles): ?object
+    {
+        return $this->mainRepository->whereHasRoleIn($field, $roles);
+    }
+
+    public function storeAdmin(array $payload): ?object
+    {
+        $payload['password'] = Hash::make($payload['password']);
+        $user = $this->mainRepository->create($payload);
+        return $user;
+    }
 }

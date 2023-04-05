@@ -24,4 +24,9 @@ class RoleServiceImplement extends Service implements RoleService{
     {
         return $this->mainRepository->getRolesWithUsers();
     }
+
+    public function whereNotIn(string $field, array $values): ?object
+    {
+        return $this->mainRepository->whereNotIn($field, $values);
+    }
 }

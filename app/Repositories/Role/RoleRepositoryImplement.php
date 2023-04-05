@@ -23,6 +23,11 @@ class RoleRepositoryImplement extends Eloquent implements RoleRepository{
 
     public function getRolesWithUsers(): ?object
     {
-        return $this->model->with('users')->whereNot('id',1)->get();
+        return $this->model->with('users','users.parent')->whereNot('id',1)->get();
+    }
+
+    public function whereNotIn(string $field, array $values): ?object
+    {
+        return $this->model->whereNotIn($field, $values)->get();
     }
 }

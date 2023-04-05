@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::prefix('admin')->group(function(){
             Route::get('/', [UserController::class, 'listAdmins'])->name('admin');
+            Route::post('/', [UserController::class, 'storeAdmin'])->name('admin.store');
         });
     });
 });

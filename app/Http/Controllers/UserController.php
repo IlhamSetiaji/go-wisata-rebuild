@@ -11,6 +11,7 @@ use App\Http\Requests\User\RegisterRequest;
 use App\Http\Requests\User\ResetPasswordRequest;
 use App\Http\Requests\User\ForgotPasswordRequest;
 use App\Http\Requests\User\OtpVerificationRequest;
+use App\Http\Requests\User\StoreAdminRequest;
 
 class UserController extends Controller
 {
@@ -106,6 +107,19 @@ class UserController extends Controller
         try{
             $roles = $this->roleService->getRolesWithUsers();
             return view('admin.index', compact('roles'));
+        } catch (\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function storeAdmin(StoreAdminRequest $request)
+    {
+        try{
+            $payload = $request->validated();
+            $user = $this->userService->storeAdmin($payload);
+            $role = $this->roleService->find($payload['role_id']);
+            $user->assignRole($role->name);
+            return redirect()->back()->with('success', 'Admin created successfully');
         } catch (\Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
         }

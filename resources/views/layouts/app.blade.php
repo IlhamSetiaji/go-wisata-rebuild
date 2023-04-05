@@ -27,9 +27,9 @@
     <!-- Search Modal Start -->
     @include('layouts.search')
     <!-- Search Modal End -->
-
-@include('layouts.scripts')
-@stack('scripts')
+    @stack('modals')
+    @include('layouts.scripts')
+    @stack('scripts')
 </body>
 
 </html>
