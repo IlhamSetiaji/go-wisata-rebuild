@@ -6,11 +6,14 @@ use Exception;
 use Carbon\Carbon;
 use App\Mail\SendMessage;
 use Illuminate\Support\Str;
+use App\Exports\UsersExport;
 use LaravelEasyRepository\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Password;
+use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Helpers\OneTimePassword\OneTimePassword;
@@ -26,9 +29,12 @@ class UserServiceImplement extends Service implements UserService
     protected $errorMessages;
     protected $errorType;
 
-    public function __construct(UserRepository $mainRepository)
+    private $roleRepository;
+
+    public function __construct(UserRepository $mainRepository, RoleRepository $roleRepository)
     {
         $this->mainRepository = $mainRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     public function getErrorMessages(): string
@@ -278,5 +284,11 @@ class UserServiceImplement extends Service implements UserService
         $payload['password'] = Hash::make($payload['password']);
         $user = $this->mainRepository->create($payload);
         return $user;
+    }
+
+    public function exportUsers(): ?object
+    {
+        $roles = $this->roleRepository->getRolesWithUsers();
+        return Excel::download(new UsersExport($roles), 'users.xlsx');
     }
 }

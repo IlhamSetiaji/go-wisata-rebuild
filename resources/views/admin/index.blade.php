@@ -19,6 +19,10 @@
                 <!-- Top Buttons Start -->
                 <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end">
                     <!-- Start Button Start -->
+                    <a href="{{ url('admin/export-users') }}" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
+                        <i data-acorn-icon="chevron-right"></i>
+                        <span>Export</span>
+                    </a>
                     <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
                         data-bs-toggle="modal" data-bs-target="#importUsers">
                         <i data-acorn-icon="chevron-right"></i>
@@ -105,7 +109,7 @@
     </div>
 @endsection
 @push('modals')
-@include('admin.modals.create')
+    @include('admin.modals.create')
 @endpush
 @push('scripts')
     <script>

@@ -8,10 +8,10 @@ use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\RegisterRequest;
+use App\Http\Requests\User\StoreAdminRequest;
 use App\Http\Requests\User\ResetPasswordRequest;
 use App\Http\Requests\User\ForgotPasswordRequest;
 use App\Http\Requests\User\OtpVerificationRequest;
-use App\Http\Requests\User\StoreAdminRequest;
 
 class UserController extends Controller
 {
@@ -120,6 +120,15 @@ class UserController extends Controller
             $role = $this->roleService->find($payload['role_id']);
             $user->assignRole($role->name);
             return redirect()->back()->with('success', 'Admin created successfully');
+        } catch (\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function exportUsers()
+    {
+        try{
+            return $this->userService->exportUsers();
         } catch (\Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('admin')->group(function(){
             Route::get('/', [UserController::class, 'listAdmins'])->name('admin');
             Route::post('/', [UserController::class, 'storeAdmin'])->name('admin.store');
+            Route::get('/export-users', [UserController::class, 'exportUsers'])->name('admin.export.users');
         });
     });
 });
