@@ -19,7 +19,8 @@
                 <!-- Top Buttons Start -->
                 <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end">
                     <!-- Start Button Start -->
-                    <a href="{{ url('admin/export-users') }}" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
+                    <a href="{{ url('admin/export-users') }}"
+                        class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
                         <i data-acorn-icon="chevron-right"></i>
                         <span>Export</span>
                     </a>
@@ -28,7 +29,7 @@
                         <i data-acorn-icon="chevron-right"></i>
                         <span>Import</span>
                     </button>
-                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
+                    <button type="button" class="btn btn-outline-success btn-icon btn-icon-start w-100 w-sm-auto"
                         data-bs-toggle="modal" data-bs-target="#createAdmin">
                         <i data-acorn-icon="chevron-right"></i>
                         <span>Create</span>
@@ -86,10 +87,50 @@
                                             @else
                                                 <td>-</td>
                                             @endif
-                                            <td><a onclick="return confirm('Are you sure?')"
-                                                    href="{{ url('admin/users/' . $user->id . '/delete') }}"
-                                                    class="btn btn-danger">Delete</a></td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#updateAdmin{{ $user->id }}"
+                                                        class="btn btn-outline-warning">Edit</a>
+                                                    <a onclick="return confirm('Are you sure?')"
+                                                        href="{{ url('admin/users/' . $user->id . '/delete') }}"
+                                                        class="btn btn-outline-danger">Delete</a>
+                                                </div>
+                                            </td>
                                         </tr>
+                                        @push('modals')
+                                            @include('admin.modals.update')
+                                        @endpush
+                                        @push('scripts')
+                                            <script>
+                                                $(document).ready(function() {
+                                                    let i = "<?php echo $user->id; ?>";
+                                                    $('#role' + i).on('change', function() {
+                                                        var idRole = this.value;
+                                                        $("#parent" + i).html('');
+                                                        $.ajax({
+                                                            url: "{{ env('APP_URL') . '/api/roles/' }}",
+                                                            type: "POST",
+                                                            data: {
+                                                                role_id: idRole,
+                                                                _token: '{{ csrf_token() }}'
+                                                            },
+                                                            dataType: 'json',
+                                                            success: function(result) {
+                                                                console.log(result);
+                                                                $('#parent' + i).html(
+                                                                    '<option value="">-- Select Parent --</option>');
+                                                                $.each(result, function(key, value) {
+                                                                    $("#parent" + i).append('<option value="' + value
+                                                                        .id + '">' + value.name + '</option>');
+                                                                    console.log(value);
+                                                                });
+                                                            }
+                                                        });
+                                                    });
+                                                });
+                                            </script>
+                                        @endpush
                                     @endforeach
                                 </tbody>
                             </table>

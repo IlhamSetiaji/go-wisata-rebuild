@@ -291,4 +291,17 @@ class UserServiceImplement extends Service implements UserService
         $roles = $this->roleRepository->getRolesWithUsers();
         return Excel::download(new UsersExport($roles), 'users.xlsx');
     }
+
+    public function updateAdmin(array $payload, int $id): ?object
+    {
+        $user = $this->mainRepository->find($id);
+        $role = $this->roleRepository->find($payload['role_id']);
+        if (!$user || !$role) {
+            return false;
+        }
+        $payload['password'] = Hash::make($payload['password']);
+        $user->update($payload);
+        $user->syncRoles($role->name);
+        return $user;
+    }
 }
