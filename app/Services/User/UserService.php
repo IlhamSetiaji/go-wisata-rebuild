@@ -26,4 +26,6 @@ interface UserService extends BaseService
     public function getRolesExceptCurrentIn(string $field, array $roles): ?object;
     public function whereHasRoleIn(string $field, array $roles): ?object;
     public function storeAdmin(array $payload): ?object;
+    public function exportUsers(): ?object;
+    public function updateAdmin(array $payload, int $id): ?object;
 }

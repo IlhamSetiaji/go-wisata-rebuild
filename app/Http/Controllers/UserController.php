@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Role\RoleService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\User\LoginRequest;
 use App\Http\Requests\User\RegisterRequest;
+use App\Http\Requests\User\StoreAdminRequest;
+use App\Http\Requests\User\UpdateAdminRequest;
 use App\Http\Requests\User\ResetPasswordRequest;
 use App\Http\Requests\User\ForgotPasswordRequest;
 use App\Http\Requests\User\OtpVerificationRequest;
-use App\Http\Requests\User\StoreAdminRequest;
 
 class UserController extends Controller
 {
@@ -56,7 +58,7 @@ class UserController extends Controller
     public function showVerifyOtp(int $id): View
     {
         $data = $this->userService->viewOtp($id);
-        if(!$data){
+        if (!$data) {
             return redirect()->back()->with($this->userService->getErrorType(), $this->userService->getErrorMessages());
         }
         return view('auth.otp', ['email' => $data['email'], 'userID' => $data['userID']]);
@@ -64,7 +66,7 @@ class UserController extends Controller
 
     public function resendOtp(int $id)
     {
-        if(!$this->userService->resendOtp($id)){
+        if (!$this->userService->resendOtp($id)) {
             return redirect()->back()->with($this->userService->getErrorType(), $this->userService->getErrorMessages());
         }
         return redirect()->back()->with('success', 'Otp resend successfully');
@@ -79,10 +81,10 @@ class UserController extends Controller
     {
         $payload = $registerRequest->validated();
         $user = $this->userService->register($payload);
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->with($this->userService->getErrorType(), $this->userService->getErrorMessages());
         }
-        return redirect('/otp/'.$user->id)->with('success', 'Register successfully, please check your email for verification');
+        return redirect('/otp/' . $user->id)->with('success', 'Register successfully, please check your email for verification');
     }
 
     public function sendResetPassword(ForgotPasswordRequest $request)
@@ -104,23 +106,46 @@ class UserController extends Controller
 
     public function listAdmins()
     {
-        try{
+        try {
             $roles = $this->roleService->getRolesWithUsers();
             return view('admin.index', compact('roles'));
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
 
     public function storeAdmin(StoreAdminRequest $request)
     {
-        try{
+        try {
             $payload = $request->validated();
             $user = $this->userService->storeAdmin($payload);
             $role = $this->roleService->find($payload['role_id']);
             $user->assignRole($role->name);
             return redirect()->back()->with('success', 'Admin created successfully');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function updateAdmin(UpdateAdminRequest $request, int $userId)
+    {
+        try {
+            $payload = $request->validated();
+            $user = $this->userService->updateAdmin($payload, $userId);
+            if (!$user) {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+            return redirect()->back()->with('success', 'Admin updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function exportUsers()
+    {
+        try {
+            return $this->userService->exportUsers();
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
