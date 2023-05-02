@@ -192,6 +192,12 @@
                                 <span class="label">Administrator</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ url('tours') }}" class="{{ request()->is('tours*') ? 'active' : '' }}">
+                                <i class="icon fa-solid fa-map-location-dot"></i>
+                                <span class="label">Tours</span>
+                            </a>
+                        </li>
                     @endif
                 @endauth
             </ul>
