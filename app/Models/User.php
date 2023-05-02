@@ -55,4 +55,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasMany(User::class, 'parent_id');
     }
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'user_id');
+    }
+
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class, 'ticket_user', 'user_id', 'ticket_id')->withPivot('quantity', 'total_price', 'status')->withTimestamps();
+    }
 }

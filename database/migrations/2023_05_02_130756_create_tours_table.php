@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->longText('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('latitude');
             $table->string('longitude');
             $table->integer('province_id');
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('sub_district_id');
             $table->string('sub_district_name');
             $table->string('address');
+            $table->string('postal_code');
             $table->string('phone');
             $table->timestamps();
         });

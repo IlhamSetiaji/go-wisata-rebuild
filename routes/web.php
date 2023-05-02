@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TourController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +42,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export-users', [UserController::class, 'exportUsers'])->name('admin.export.users');
             Route::post('/{id}/update', [UserController::class, 'updateAdmin'])->name('admin.update');
         });
+    });
+    Route::prefix('tours')->group(function(){
+        Route::get('/',[TourController::class, 'index'])->name('tours.index');
     });
 });
