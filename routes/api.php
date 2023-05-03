@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('roles', [UserController::class, 'fetchRoles']);
+Route::post('fetch-districts', [AddressController::class, 'fetchDistrictsByProvinceId']);
+Route::post('fetch-sub-districts', [AddressController::class, 'fetchSubDistrictsByDistrictId']);
+Route::post('fetch-villages', [AddressController::class, 'fetchVillagesBySubDistrictId']);

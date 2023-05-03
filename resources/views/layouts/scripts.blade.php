@@ -24,6 +24,13 @@
     <script src="{{ asset('js/vendor/plyr.min.js') }}"></script>
 
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <!-- Leaflet JS End-->
     <!-- Vendor Scripts End -->
 
     <!-- Template Base Scripts Start -->
