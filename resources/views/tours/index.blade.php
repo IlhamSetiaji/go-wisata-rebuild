@@ -2,18 +2,42 @@
 @section('content')
     <div class="container">
         <!-- Title Start -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-container">
-                    <h1 class="mb-0 pb-0 display-4" id="title">Blog Grid</h1>
+        <div class="page-title-container">
+            <div class="row">
+                <!-- Title Start -->
+                <div class="col-12 col-sm-6">
+                    <h1 class="mb-0 pb-0 display-4" id="title">Tours</h1>
                     <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
                         <ul class="breadcrumb pt-0">
-                            <li class="breadcrumb-item"><a href="Dashboards.Default.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="Pages.html">Pages</a></li>
-                            <li class="breadcrumb-item"><a href="Pages.Blog.html">Blog</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Tours</a></li>
                         </ul>
                     </nav>
                 </div>
+                <!-- Title End -->
+                <!-- Top Buttons Start -->
+                <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end">
+                    <!-- Start Button Start -->
+                    <a href="{{ url('admin/export-users') }}"
+                        class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
+                        <i data-acorn-icon="chevron-right"></i>
+                        <span>Export</span>
+                    </a>
+                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#importUsers">
+                        <i data-acorn-icon="chevron-right"></i>
+                        <span>Import</span>
+                    </button>
+                    <button type="button" class="btn btn-outline-success btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#createData">
+                        <i data-acorn-icon="chevron-right"></i>
+                        <span>Create</span>
+                    </button>
+                    {{-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#largeRightModalExample">Large</button> --}}
+                    <!-- Start Button End -->
+                </div>
+                <!-- Top Buttons End -->
             </div>
         </div>
         <!-- Title End -->
@@ -258,6 +282,9 @@
         </div>
     </div>
 @endsection
+@push('modals')
+    @include('tours.modals.create')
+@endpush
 @push('scripts')
     <script>
         const ENDPOINT = "{{ route('tours.index') }}";
