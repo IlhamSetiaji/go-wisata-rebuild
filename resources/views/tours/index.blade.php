@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
+        @include('layouts.alert')
         <!-- Title Start -->
         <div class="page-title-container">
             <div class="row">

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('city_name');
             $table->integer('district_id');
             $table->string('district_name');
-            $table->integer('sub_district_id');
+            $table->bigInteger('sub_district_id');
             $table->string('sub_district_name');
             $table->string('address');
             $table->string('postal_code');

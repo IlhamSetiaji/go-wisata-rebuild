@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="mb-3 top-label">
-                                <select name="province" id="province" class="form-control">
+                                <select name="province_id" id="province" class="form-control">
                                     <option label="&nbsp;"></option>
                                     @foreach ($provinces as $province)
                                         <option value="{{ $province->id }}">{{ $province->nama }}</option>
@@ -48,30 +48,34 @@
                                 <span>CHOOSE PROVINCE</span>
                             </label>
                         </div>
+                        <input type="hidden" name="province_name" id="province_name">
                         <div class="col-md-12">
                             <label class="mb-3 top-label">
-                                <select name="district" id="district" class="form-control">
+                                <select name="city_id" id="district" class="form-control">
+                                    <option label="&nbsp;"></option>
+                                </select>
+                                <span>CHOOSE CITY</span>
+                            </label>
+                        </div>
+                        <input type="hidden" name="city_name" id="district_name">
+                        <div class="col-md-12">
+                            <label class="mb-3 top-label">
+                                <select name="district_id" id="sub_district" class="form-control">
                                     <option label="&nbsp;"></option>
                                 </select>
                                 <span>CHOOSE DISTRICT</span>
                             </label>
                         </div>
+                        <input type="hidden" name="district_name" id="sub_district_name">
                         <div class="col-md-12">
                             <label class="mb-3 top-label">
-                                <select name="sub_district" id="sub_district" class="form-control">
+                                <select name="sub_district_id" id="village" class="form-control">
                                     <option label="&nbsp;"></option>
                                 </select>
                                 <span>CHOOSE SUB-DISTRICT</span>
                             </label>
                         </div>
-                        <div class="col-md-12">
-                            <label class="mb-3 top-label">
-                                <select name="village" id="village" class="form-control">
-                                    <option label="&nbsp;"></option>
-                                </select>
-                                <span>CHOOSE VILLAGE</span>
-                            </label>
-                        </div>
+                        <input type="hidden" name="sub_district_name" id="village_name">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="text" id="lat" name="latitude"
@@ -86,6 +90,24 @@
                             <div class="container">
                                 <div class="container" id="map" style="width: 100%; height: 300px;"></div>
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="mb-3 top-label">
+                                <textarea name="address" id="" cols="30" rows="10" class="form-control"></textarea>
+                                <span>ADDRESS</span>
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="mb-3 top-label">
+                                <input class="form-control" type="number" min="0" name="postal_code" />
+                                <span>POSTAL CODE</span>
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="mb-3 top-label">
+                                <input class="form-control" type="number" min="0" name="phone" />
+                                <span>PHONE NUMBER</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -138,7 +160,7 @@
             --------------------------------------------
             --------------------------------------------*/
             $('#province').on('change', function() {
-                var idProvince = this.value;
+                let idProvince = this.value;
                 $("#district").html('');
                 $.ajax({
                     url: "{{ url('api/fetch-districts') }}",
@@ -150,6 +172,7 @@
                     dataType: 'json',
                     success: function(result) {
                         console.log(result);
+                        document.getElementById('province_name').value = $("#province option:selected").text();
                         $('#district').html(
                             '<option value="">-- Select State --</option>');
                         $.each(result, function(key, value) {
@@ -167,7 +190,7 @@
             --------------------------------------------
             --------------------------------------------*/
             $('#district').on('change', function() {
-                var idDistrict = this.value;
+                let idDistrict = this.value;
                 $("#sub_district").html('');
                 $.ajax({
                     url: "{{ url('api/fetch-sub-districts') }}",
@@ -179,6 +202,7 @@
                     dataType: 'json',
                     success: function(result) {
                         console.log(result);
+                        document.getElementById('district_name').value = $("#district option:selected").text();
                         $('#sub_district').html(
                             '<option value="">-- Select State --</option>');
                         $.each(result, function(key, value) {
@@ -196,7 +220,7 @@
             --------------------------------------------
             --------------------------------------------*/
             $('#sub_district').on('change', function() {
-                var idSubDistrict = this.value;
+                let idSubDistrict = this.value;
                 $("#village").html('');
                 $.ajax({
                     url: "{{ url('api/fetch-villages') }}",
@@ -208,6 +232,7 @@
                     dataType: 'json',
                     success: function(result) {
                         console.log(result);
+                        document.getElementById('sub_district_name').value = $("#sub_district option:selected").text();
                         $('#village').html(
                             '<option value="">-- Select State --</option>');
                         $.each(result, function(key, value) {
@@ -219,6 +244,14 @@
                 });
             });
 
+            /*------------------------------------------
+            --------------------------------------------
+            Village Dropdown Change Event
+            --------------------------------------------
+            --------------------------------------------*/
+            $('#village').on('change', function() {
+                document.getElementById('village_name').value = $("#village option:selected").text();
+            });
         });
     </script>
 @endpush

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Address\AddressService;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Services\Tour\TourService;
 use App\Services\User\UserService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use App\Services\Address\AddressService;
+use App\Http\Requests\Tour\CreateTourRequest;
 
 class TourController extends Controller
 {
@@ -35,6 +37,18 @@ class TourController extends Controller
             return view('tours.index', compact('tours', 'users', 'provinces'));
         } catch (\Exception $err) {
             return abort(500, $err->getMessage());
+        }
+    }
+
+    public function create(CreateTourRequest $createTourRequest)
+    {
+        try {
+            $payload = $createTourRequest->validated();
+            $payload['slug'] = Str::slug($payload['name'], '-');
+            $this->tourService->create($payload);
+            return redirect()->back()->with('success', 'Tour created successfully');
+        } catch (\Exception $err) {
+            return abort(400, $err->getMessage());
         }
     }
 }
