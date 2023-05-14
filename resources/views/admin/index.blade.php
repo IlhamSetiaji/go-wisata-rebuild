@@ -19,15 +19,20 @@
                 <!-- Top Buttons Start -->
                 <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end">
                     <!-- Start Button Start -->
-                    <button type="button" class="btn btn-outline-warning btn-icon btn-icon-start w-100 w-sm-auto"
-                        data-bs-toggle="modal" data-bs-target="#updateData">
+                    <a href="{{ url('admin/export-users') }}"
+                        class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
                         <i data-acorn-icon="chevron-right"></i>
-                        <span>Update</span>
+                        <span>Export</span>
+                    </a>
+                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#importUsers">
+                        <i data-acorn-icon="chevron-right"></i>
+                        <span>Import</span>
                     </button>
-                    <button type="button" class="btn btn-outline-danger btn-icon btn-icon-start w-100 w-sm-auto"
-                        data-bs-toggle="modal" data-bs-target="#deleteData">
+                    <button type="button" class="btn btn-outline-success btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#createData">
                         <i data-acorn-icon="chevron-right"></i>
-                        <span>Delete</span>
+                        <span>Create</span>
                     </button>
                     <!-- Start Button End -->
                 </div>
