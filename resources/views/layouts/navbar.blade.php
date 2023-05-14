@@ -29,13 +29,8 @@
             @auth
                 <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    @if (auth()->user()->avatar == null)
-                        <img class="profile" alt="profile" src="img/profile/profile-11.webp" />
-                        <div class="name">{{ auth()->user()->name }}</div>
-                    @else
-                        <img class="profile" alt="profile" src="{{ auth()->user()->avatar }}" />
-                        <div class="name">{{ auth()->user()->name }}</div>
-                    @endif
+                    <img class="profile" alt="profile" src="{{ auth()->user()->avatar ? auth()->user()->avatar : asset('img/profile/profile-11.webp') }}" />
+                    <div class="name">{{ auth()->user()->name }}</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end user-menu wide">
                     <div class="row mb-1 ms-0 me-0">

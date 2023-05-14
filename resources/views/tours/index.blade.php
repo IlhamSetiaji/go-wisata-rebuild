@@ -11,7 +11,7 @@
                     <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
                         <ul class="breadcrumb pt-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Tours</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="text-primary">Tours</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -10,8 +10,8 @@
                     <h1 class="mb-0 pb-0 display-4" id="title">Data Administrator</h1>
                     <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
                         <ul class="breadcrumb pt-0">
-                            <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-                            {{-- <li class="breadcrumb-item"><a href="Quiz.List.html">Quizes</a></li> --}}
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a class="text-primary" href="#">Admin</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -19,23 +19,16 @@
                 <!-- Top Buttons Start -->
                 <div class="col-12 col-sm-6 d-flex align-items-start justify-content-end">
                     <!-- Start Button Start -->
-                    <a href="{{ url('admin/export-users') }}"
-                        class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto">
+                    <button type="button" class="btn btn-outline-warning btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#updateData">
                         <i data-acorn-icon="chevron-right"></i>
-                        <span>Export</span>
-                    </a>
-                    <button type="button" class="btn btn-outline-primary btn-icon btn-icon-start w-100 w-sm-auto"
-                        data-bs-toggle="modal" data-bs-target="#importUsers">
-                        <i data-acorn-icon="chevron-right"></i>
-                        <span>Import</span>
+                        <span>Update</span>
                     </button>
-                    <button type="button" class="btn btn-outline-success btn-icon btn-icon-start w-100 w-sm-auto"
-                        data-bs-toggle="modal" data-bs-target="#createAdmin">
+                    <button type="button" class="btn btn-outline-danger btn-icon btn-icon-start w-100 w-sm-auto"
+                        data-bs-toggle="modal" data-bs-target="#deleteData">
                         <i data-acorn-icon="chevron-right"></i>
-                        <span>Create</span>
+                        <span>Delete</span>
                     </button>
-                    {{-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                        data-bs-target="#largeRightModalExample">Large</button> --}}
                     <!-- Start Button End -->
                 </div>
                 <!-- Top Buttons End -->
