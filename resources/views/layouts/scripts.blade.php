@@ -15,7 +15,9 @@
 
     <script src="{{ asset('js/vendor/chartjs-plugin-rounded-bar.min.js') }}"></script>
 
+
     <script src="{{ asset('js/vendor/glide.min.js') }}"></script>
+    <script src="{{ asset('js/pages/blog.detail.js') }}"></script>
 
     <script src="{{ asset('js/vendor/intro.min.js') }}"></script>
 

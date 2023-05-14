@@ -51,4 +51,20 @@ class TourController extends Controller
             return abort(400, $err->getMessage());
         }
     }
+
+    public function detail(int $id)
+    {
+        try {
+            $tour = $this->tourService->find($id);
+            $location[] = [
+                $tour->name,
+                $tour->latitude,
+                $tour->longitude,
+                $tour->id
+            ];
+            return view('tours.detail', compact('tour','location'));
+        } catch (\Exception $err) {
+            return abort(400, $err->getMessage());
+        }
+    }
 }

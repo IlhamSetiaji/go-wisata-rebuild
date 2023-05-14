@@ -5,7 +5,7 @@
                 alt="card image" />
             <div class="card-body">
                 <h5 class="heading mb-3">
-                    <a href="#" class="body-link stretched-link">
+                    <a href="{{ url('tours/' . $tour->id . '/detail') }}" class="body-link stretched-link">
                         <span class="clamp-line sh-5" data-line="2">{{ $tour->name }}</span>
                     </a>
                 </h5>

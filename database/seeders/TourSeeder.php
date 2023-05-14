@@ -24,8 +24,8 @@ class TourSeeder extends Seeder
                 $tour = [
                     'name' => 'Tour ' . $i . ' ' . $j,
                     'description' => 'Description ' . $i . ' ' . $j,
-                    'latitude' => $location->coordinates->latitude,
-                    'longitude' => $location->coordinates->longitude,
+                    'latitude' => '-7.3387896',
+                    'longitude' => '112.7301445',
                     'province_id' => json_decode($province)->id,
                     'province_name' => json_decode($province)->nama,
                     'city_id' => json_decode($city)->kota_kabupaten[0]->id,

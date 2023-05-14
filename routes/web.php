@@ -46,5 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('tours')->group(function(){
         Route::get('/',[TourController::class, 'index'])->name('tours.index');
         Route::post('/',[TourController::class, 'create'])->name('tours.create');
+        Route::get('/{id}/detail',[TourController::class,'detail'])->name('tours.detail');
     });
 });
